@@ -1,0 +1,9 @@
+{
+	"name": "gulp-less-variables",
+	"version": "0.0.1",
+	"main": "index.js",
+	"dependencies": {
+		"gulp-util": "^3.0.1",
+		"through2": "^0.6.2"
+	}
+}
