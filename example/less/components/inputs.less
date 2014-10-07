@@ -1,0 +1,25 @@
+/*
+ * Inputs, inputs,
+ * inputs, inputs,
+ * inputs, inputs,
+ * inputs!
+ */
+
+@input-bg: #001;
+@input-border: #556;
+@input-color: #FFE;
+@input-disabled-bg: #998;
+@input-disabled-border: #CCD;
+@input-disabled-color: #001;
+
+input {
+	color: @input-color;
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+
+	&:disabled {
+		color: @input-disabled-color;
+		background-color: @input-disabled-bg;
+		border: 1px solid @input-disabled-border;
+	}
+}

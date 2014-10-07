@@ -66,10 +66,14 @@ module.exports = function (options) {
 		};
 		findFiles(file);
 
-		// Find all variables in files
+		// Find first comment block and all variables in files
 		var variables = {};
 		var variablesFileMap = {};
 		var varRegex = /^@(.*?)\s*?:\s*(.*?)\s*;/gm;
+
+		var comments = {};
+		var commentsRegex = /\/\*+\s*((?:.*?\s*?)+?)\s*\*+\//;
+		var commentsReplaceRegex = /^\s*\**\s*/gm;
 		try {
 			Object.keys(files).forEach(function (filename) {
 				if (path.basename(filename) == options.filename) {
@@ -94,6 +98,11 @@ module.exports = function (options) {
 
 					variables[relPath][field] = value;
 				}
+
+				match = content.match(commentsRegex);
+				if (match) {
+					comments[relPath] = match[1].replace(commentsReplaceRegex, " * ");
+				}
 			});
 		} catch (e) {
 			return cb(e);
@@ -115,6 +124,14 @@ module.exports = function (options) {
 					if (!filename) {
 						return;
 					}
+
+					var commentBlock = varBlock.match(commentsRegex);
+					if (commentBlock) {
+						commentBlock = commentBlock[1].replace(commentsReplaceRegex, " * ");
+						varBlock.replace(commentsRegex, "");
+						comments[filename] = commentBlock;
+					}
+
 					if (!variables[filename]) {
 						removedFiles.push(filename);
 					}
@@ -162,15 +179,20 @@ module.exports = function (options) {
 		});
 
 		var fullOutput = [];
-		Object.keys(variables).forEach(function (filename) {
+		Object.keys(variables).sort().forEach(function (filename) {
 			var fileOutput = [];
 
 			fileOutput.push("//* " + filename + " *//");
+			if (comments[filename]) {
+				fileOutput.push("/*");
+				fileOutput.push(comments[filename]);
+				fileOutput.push(" */");
+			}
 			var fileVars = variables[filename];
 			if (Object.keys(fileVars).length == 0) {
 				return;
 			}
-			Object.keys(fileVars).forEach(function (field) {
+			Object.keys(fileVars).sort().forEach(function (field) {
 				fileOutput.push("@" + field + ":   " + (new Array(longestFieldLength - field.length + 1)).join(" ") + fileVars[field] + ";");
 			});
 
