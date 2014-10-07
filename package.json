@@ -1,7 +1,24 @@
 {
 	"name": "gulp-less-variables",
 	"version": "0.0.1",
+	"description": "Gulp plugin to create an index of variables within all imported less files.",
 	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Tapad/gulp-less-variables"
+	},
+	"keywords": [
+		"gulpplugin",
+		"less",
+		"css",
+		"variables"
+	],
+	"author": "Jesse Zhang",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Tapad/gulp-less-variables/issues"
+	},
+	"homepage": "https://github.com/Tapad/gulp-less-variables",
 	"dependencies": {
 		"gulp-util": "^3.0.1",
 		"through2": "^0.6.2"
