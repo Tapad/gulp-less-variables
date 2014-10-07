@@ -1,4 +1,4 @@
-# [gulp](http://gulpjs.com)-angular-builder
+# [gulp](http://gulpjs.com)-less-variables
 
 > Gulp plugin to create an index of variables within all imported less files.
 

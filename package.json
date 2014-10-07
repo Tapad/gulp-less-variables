@@ -1,6 +1,6 @@
 {
 	"name": "gulp-less-variables",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Gulp plugin to create an index of variables within all imported less files.",
 	"main": "index.js",
 	"repository": {
